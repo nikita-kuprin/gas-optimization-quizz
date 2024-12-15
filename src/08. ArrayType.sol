@@ -14,7 +14,21 @@ contract ArrayType is IArrayType {
 }
 
 contract ArrayTypeOptimized is IArrayType {
-    /* YOUR SOLUTION GOES HERE */
+    uint256[] array;
 
-    function initArray() public {}
+    function initArray() public {
+        uint256[] storage arr = array;
+        assembly {
+            sstore(arr.slot, 200)
+        }
+        for (uint256 i; i < 200; ) {
+            assembly {
+                mstore(0, arr.slot)
+                let hash := keccak256(0, 32)
+                sstore(add(hash, i), i)
+            }
+            unchecked { ++i; }
+        }
+    }
 }
+

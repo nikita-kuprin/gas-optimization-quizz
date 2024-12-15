@@ -22,5 +22,17 @@ contract ErrorsTest is Test {
 }
 
 contract ErrorsOptimizedTest is Test {
-/* YOUR SOLUTION GOES HERE */
+    ErrorsOptimized errorsOptimized;
+
+    function setUp() public {
+        errorsOptimized = new ErrorsOptimized();
+    }
+
+    function test_call() public {
+        vm.startPrank(address(0x01));
+        vm.expectRevert();
+        errorsOptimized.call();
+        vm.stopPrank();
+    }
 }
+

@@ -19,7 +19,15 @@ contract Errors is IErrors {
 }
 
 contract ErrorsOptimized is IErrors {
-    /* YOUR SOLUTION GOES HERE */
+    error NotOwner();
+    address owner;
 
-    function call() public view {}
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function call() public view {
+        if (owner != msg.sender) revert NotOwner();
+    }
 }
+
